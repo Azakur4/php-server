@@ -1,5 +1,7 @@
-{$, View} = require 'atom'
-{MessagePanelView, PlainMessageView, LineMessageView} = require 'atom-message-panel'
+{$, View} = require 'atom-space-pen-views'
+{MessagePanelView} = require 'atom-message-panel'
+{PlainMessageView} = require 'atom-message-panel'
+{LineMessageView} = require 'atom-message-panel'
 
 module.exports =
   class PhpServerView extends MessagePanelView

@@ -26,7 +26,8 @@ module.exports =
       default: ''
     overrideErrorlog:
       title: 'Override error log'
-      description: 'Redirect error log to panel in Atom. Overrides ini settings. May not work on Windows'
+      description: 'Redirect error log to panel in Atom.
+        Overrides ini settings. May not work on Windows'
       type: 'boolean'
       default: false
 
@@ -37,8 +38,10 @@ module.exports =
   activate: ->
     atom.commands.add 'atom-workspace', "php-server:start", => @start()
     atom.commands.add 'atom-workspace', "php-server:start-tree", => @startTree()
-    atom.commands.add 'atom-workspace', "php-server:start-tree-route", => @startTreeRoute()
-    atom.commands.add 'atom-workspace', "php-server:start-document", => @startDocument()
+    atom.commands.add 'atom-workspace', "php-server:start-tree-route",
+      => @startTreeRoute()
+    atom.commands.add 'atom-workspace', "php-server:start-document",
+      => @startDocument()
     atom.commands.add 'atom-workspace', "php-server:clear", => @clear()
     atom.commands.add 'atom-workspace', "php-server:stop", => @stop()
 
@@ -52,7 +55,8 @@ module.exports =
 
 
   startTreeRoute: ->
-    [path, basename] = @splitPath atom.packages.getLoadedPackage('tree-view').serialize().selectedPath
+    [path, basename] = @splitPath atom.packages.getLoadedPackage('tree-view')
+      .serialize().selectedPath
     @start path, basename
 
 
@@ -64,7 +68,8 @@ module.exports =
     basename = false
     if !fs.lstatSync(path).isDirectory()
       basename = path.split(/[\\/]/).pop()
-      path = path.substring(0, Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\")))
+      path = path.substring(0, Math.max(path.lastIndexOf("/"),
+        path.lastIndexOf("\\")))
 
     return [path, basename]
 
@@ -100,7 +105,8 @@ module.exports =
       if @view
         if err.code == 'ENOENT'
           @view.addError "PHP Server could not launch"
-          @view.addError "Have you defined the right path to PHP in your settings? Using #{@server.path}"
+          @view.addError "Have you defined the right path to PHP
+            in your settings? Using #{@server.path}"
         else if err.code == 'ENOTDIR'
           @view.addError "PHP Server could not launch"
           @view.addError "Not a directory? Using #{@server.documentRoot}"
@@ -110,21 +116,22 @@ module.exports =
     # Set up panel
     if !@view
       @view = new PhpServerView(
-          title: "PHP Server: Launching..."
+        title: "PHP Server: Launching..."
       )
 
     @view.attach()
 
     # Start server
     @server.start =>
-      @view.setTitle "PHP Server: <a href=\"#{@server.href}\">#{@server.href}</a>", true
+      @view.setTitle "PHP Server:
+        <a href=\"#{@server.href}\">#{@server.href}</a>", true
 
       @view.addMessage "Listening on #{@server.href}"
       @view.addMessage "Document root is #{@server.documentRoot}"
 
       href = @server.href
       if basename
-          href += '/' + basename
+        href += '/' + basename
 
       # Launch browser
       open href

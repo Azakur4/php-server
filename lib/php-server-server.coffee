@@ -48,7 +48,8 @@ module.exports =
 
           if @overrideErrorlog
             # ini settings for errors to be logged to stderr
-            options.push "-d", "error_log=", "-d", "log_errors=1", "-d", "display_errors="
+            options.push "-d", "error_log=",
+              "-d", "log_errors=1", "-d", "display_errors="
 
           if @ini
             # Set specified php.ini file
