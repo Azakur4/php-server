@@ -82,7 +82,12 @@ module.exports =
 
     # Launch server in given working directory
     if !documentroot
-      documentroot = atom.project.getPath()
+      projectPaths = atom.project.getPaths()
+      currentFilePath = atom.workspace.getActiveTextEditor().getPath()
+
+      for projectPath in projectPaths
+        if currentFilePath.indexOf(projectPath) > -1
+          documentroot = projectPath
 
     [documentroot, basename] = @splitPath documentroot
 
@@ -105,8 +110,8 @@ module.exports =
       if @view
         if err.code == 'ENOENT'
           @view.addError "PHP Server could not launch"
-          @view.addError "Have you defined the right path to PHP
-            in your settings? Using #{@server.path}"
+          @view.addError "Have you defined the right path to PHP " +
+            "in your settings? Using #{@server.path}"
         else if err.code == 'ENOTDIR'
           @view.addError "PHP Server could not launch"
           @view.addError "Not a directory? Using #{@server.documentRoot}"
